@@ -34,7 +34,8 @@ include "../../db.php";
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
 
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="../assets/css/argon-dashboard-tailwind.css?v=1.0.1" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -48,13 +49,40 @@ include "../../db.php";
 
   <!-- Popper.js -->
   <script src="https://unpkg.com/@popperjs/core@2"></script>
-
-  <!-- Alpine.js -->
   <script src="https://unpkg.com/alpinejs" defer></script>
 
   <!-- Main Styling -->
   <link href="../assets/css/argon-dashboard-tailwind.css" rel="stylesheet" />
 </head>
+<?php if (isset($_GET['message']) && $_GET['message'] == 'success'): ?>
+  <div id="success-alert" class="fixed top-5 right-5 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 transform scale-95 opacity-0 transition-all duration-300">
+    <p class="font-bold">Erfolg!</p>
+    <p>Daten wurden erfolgreich geändert.</p>
+  </div>
+
+  <script>
+    // Funktion, die das Pop-up einblendet, wenn eine bestimmte Bedingung erfüllt ist (z.B. URL-Parameter message=success)
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const successAlert = document.getElementById('success-alert');
+
+      // Check if the URL contains the message=success parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('message') === 'success') {
+        // Zeige den Alert an, indem die Übergangsklassen entfernt werden
+        successAlert.classList.remove('opacity-0', 'scale-95'); // Entferne unsichtbar und kleiner
+        successAlert.classList.add('opacity-100', 'scale-100'); // Mach sichtbar und setze normale Größe
+
+        // Nachdem 5 Sekunden vergangen sind, verschwindet der Alert
+        setTimeout(() => {
+          successAlert.classList.remove('opacity-100', 'scale-100'); // Entferne sichtbar und normale Größe
+          successAlert.classList.add('opacity-0', 'scale-95'); // Mache wieder unsichtbar und kleiner
+        }, 5000); // 5 Sekunden
+      }
+    });
+  </script>
+
+<?php endif; ?>
+
 
 <body class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
   <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
@@ -331,17 +359,32 @@ include "../../db.php";
               echo '<td>' . $row['verlag'] . '</td>';
               echo '<td>' . $row['anschaffungspreis'] . '€</td>';
               echo '<td>' . $row['kategorie'] . '</td>';
-              echo '<td><a class="text-sm leading-normal text-center text-lime-400 lg:text-left" href="ausleihen.php?isbn=' . $row['isbn'] . '">Ausleihen</a>
-              | <a class="text-sm leading-normal text-center text-lime-100 lg:text-left" href="zurueckgeben.php?isbn=' . $row['isbn'] . '">Zurückgeben</a>
-              </td>';
+              echo '<td>';
+              echo '<a href="bearbeiten.php?isbn=' . $row['isbn'] . '">Bearbeiten</a> | ';
+              echo '<a href="#" class="delete-btn" data-isbn="' . $row['isbn'] . '">Löschen</a>';
+              echo '</td>';
               echo '</tr>';
             }
             ?>
           </tbody>
-
         </table>
 
-        
+        <!-- Modal -->
+        <div id="deleteModal" class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center">
+          <div class="bg-white rounded-lg shadow-lg w-96">
+            <div class="px-6 py-4 border-b">
+              <h2 class="text-lg font-semibold">Buch löschen</h2>
+            </div>
+            <div class="p-6">
+              <p>Möchten Sie dieses Buch wirklich löschen?</p>
+            </div>
+            <div class="flex justify-end px-6 py-4 border-t space-x-3">
+              <button id="cancelBtn" class="bg-gray-500 text-white px-4 py-2 rounded">Abbrechen</button>
+              <a id="confirmDelete" href="#" class="bg-red-500 text-white px-4 py-2 rounded">Löschen</a>
+            </div>
+          </div>
+        </div>
+
 
         <footer class="pt-4">
           <div class="w-full px-6 mx-auto">
@@ -441,7 +484,7 @@ include "../../db.php";
 <!-- plugin for scrollbar  -->
 <script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
 <!-- main script file  -->
-<script src="../assets/js/argon-dashboard-tailwind.js" async></script>
+<script src="../assets/js/argon-dashboard-tailwind.js?v=1.0.1" async></script>
 
 
 
@@ -449,6 +492,26 @@ include "../../db.php";
 <script>
   new DataTable('#example');
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const deleteButtons = document.querySelectorAll(".delete-btn");
+    const deleteModal = document.getElementById("deleteModal");
+    const confirmDelete = document.getElementById("confirmDelete");
+    const cancelBtn = document.getElementById("cancelBtn");
 
+    deleteButtons.forEach(button => {
+      button.addEventListener("click", function(e) {
+        e.preventDefault();
+        const isbn = this.getAttribute("data-isbn");
+        confirmDelete.setAttribute("href", `loeschen.php?isbn=${isbn}`);
+        deleteModal.classList.remove("hidden");
+      });
+    });
+
+    cancelBtn.addEventListener("click", function() {
+      deleteModal.classList.add("hidden");
+    });
+  });
+</script>
 
 </html>

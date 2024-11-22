@@ -32,6 +32,8 @@ include "../../db.php";
   <script src="https://kit.fontawesome.com/d644d5e21b.js" crossorigin="anonymous"></script>
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
 
   <!-- Tailwind CSS -->
   <link href="../assets/css/argon-dashboard-tailwind.css?v=1.0.1" rel="stylesheet" />
@@ -422,40 +424,69 @@ include "../../db.php";
       </div>
       <!-- end cards -->
   </main>
-  <div fixed-plugin>
-    <a fixed-plugin-button class="fixed px-4 py-2 text-xl bg-white shadow-lg cursor-pointer bottom-8 right-8 z-990 rounded-circle text-slate-700">
-      <i class="py-2 pointer-events-none fa fa-cog"> </i>
-    </a>
-    <!-- -right-90 in loc de 0-->
-    <div fixed-plugin-card class="z-sticky backdrop-blur-2xl backdrop-saturate-200 dark:bg-slate-850/80 shadow-3xl w-90 ease -right-90 fixed top-0 left-auto flex h-full min-w-0 flex-col break-words rounded-none border-0 bg-white/80 bg-clip-border px-2.5 duration-200">
-      <div class="px-6 pt-4 pb-0 mb-0 border-b-0 rounded-t-2xl">
-        <div class="float-left">
-          <h5 class="mt-4 mb-0 dark:text-white">Configurator</h5>
-        </div>
-        <div class="float-right mt-6">
-          <button fixed-plugin-close-button class="inline-block p-0 mb-4 text-sm font-bold leading-normal text-center uppercase align-middle transition-all ease-in bg-transparent border-0 rounded-lg shadow-none cursor-pointer hover:-translate-y-px tracking-tight-rem bg-150 bg-x-25 active:opacity-85 dark:text-white text-slate-700">
-            <i class="fa fa-close"></i>
-          </button>
-        </div>
-        <!-- End Toggle Button -->
-      </div>
-      <hr class="h-px mx-0 my-1 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
-      <div class="flex-auto p-6 pt-0 overflow-auto sm:pt-4">
 
-        <div class="flex items-center justify-between p-4">
-          <h6 class="text-lg font-medium text-gray-800 dark:text-white">Light / Dark</h6>
-          <!-- Toggle Switch -->
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input id="darkToggle" class="rounded-10 duration-250 ease-in-out after:rounded-circle after:shadow-2xl after:duration-250 checked:after:translate-x-5.3 h-5 relative float-left mt-1 ml-auto w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-blue-500/95 checked:bg-blue-500/95 checked:bg-none checked:bg-right" type="checkbox" />
-            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:bg-blue-600">
-            </div>
-          </label>
-        </div>
-
-      </div>
-    </div>
-  </div>
 </body>
+<div>
+  <div class="fixed end-6 bottom-6 group">
+    <!-- Speed Dial Menu -->
+    <div id="speed-dial-menu-default" class="flex flex-col items-center hidden mb-4 space-y-2">
+      <a href="./buch_erstellen.php" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
+        <i class="fa fa-book-medical fa-1x"></i> 
+        <span class="sr-only">Buch hinzufügen</span>
+      </a>
+
+    </div>
+
+    <!-- Main Button -->
+    <button type="button" id="speedDialToggle" aria-controls="speed-dial-menu-default" aria-expanded="false" class="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
+      <svg class="w-5 h-5 transition-transform group-hover:rotate-45" id="toggleIcon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+      </svg>
+      <span class="sr-only">Open actions menu</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  // JavaScript for toggling the speed dial menu
+  const button = document.getElementById('speedDialToggle');
+  const menu = document.getElementById('speed-dial-menu-default');
+  const container = button.closest('.group');
+  const icon = document.getElementById('toggleIcon');
+
+  // Show/hide menu on click
+  button.addEventListener('click', function() {
+    toggleMenu();
+  });
+
+  // Show menu on hover (button or menu)
+  container.addEventListener('mouseenter', () => {
+    menu.classList.remove('hidden');
+    menu.classList.add('flex');
+    icon.classList.add('rotate-45');
+  });
+
+  // Hide menu when leaving button and menu
+  container.addEventListener('mouseleave', () => {
+    menu.classList.add('hidden');
+    menu.classList.remove('flex');
+    icon.classList.remove('rotate-45');
+  });
+
+  // Function to toggle menu visibility
+  function toggleMenu() {
+    if (menu.classList.contains('hidden')) {
+      menu.classList.remove('hidden');
+      menu.classList.add('flex');
+      icon.classList.add('rotate-45');
+    } else {
+      menu.classList.add('hidden');
+      menu.classList.remove('flex');
+      icon.classList.remove('rotate-45');
+    }
+  }
+</script>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const darkToggle = document.getElementById('darkToggle');

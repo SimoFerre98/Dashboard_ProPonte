@@ -84,6 +84,34 @@ include "../../db.php";
   </script>
 
 <?php endif; ?>
+<?php if (isset($_GET['create']) && $_GET['create'] == 'error'): ?>
+  <div id="success-alert" class="fixed top-5 right-5 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 transform scale-95 opacity-0 transition-all duration-300">
+    <p class="font-bold">Erfolg!</p>
+    <p>Daten wurden erfolgreich geändert.</p>
+  </div>
+
+  <script>
+    // Funktion, die das Pop-up einblendet, wenn eine bestimmte Bedingung erfüllt ist (z.B. URL-Parameter message=success)
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const successAlert = document.getElementById('success-alert');
+
+      // Check if the URL contains the message=success parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('create') === 'error') {
+        // Zeige den Alert an, indem die Übergangsklassen entfernt werden
+        successAlert.classList.remove('opacity-0', 'scale-95'); // Entferne unsichtbar und kleiner
+        successAlert.classList.add('opacity-100', 'scale-100'); // Mach sichtbar und setze normale Größe
+
+        // Nachdem 5 Sekunden vergangen sind, verschwindet der Alert
+        setTimeout(() => {
+          successAlert.classList.remove('opacity-100', 'scale-100'); // Entferne sichtbar und normale Größe
+          successAlert.classList.add('opacity-0', 'scale-95'); // Mache wieder unsichtbar und kleiner
+        }, 5000); // 5 Sekunden
+      }
+    });
+  </script>
+
+<?php endif; ?>
 
 
 <body class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">

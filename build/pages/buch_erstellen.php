@@ -16,6 +16,34 @@
 <?php
 include "../../db.php";
 
+if (isset($_POST["submit"])) {
+    $isbn = $_POST["isbn"];
+    $titel = $_POST["titel"];
+    $kategorie = $_POST["kategorie"];
+    $verlag = $_POST["verlag"];
+    $beschreibung = $_POST["beschreibung"];
+
+    $sql_check = "SELECT COUNT(*) AS count FROM buch WHERE isbn = '$isbn'";
+    $result_check = $conn->query($sql_check);
+    if ($result_check->num_rows > 0) {
+        $row = $result_check->fetch_assoc();
+        if ($row["count"] > 0) {
+            $_SESSION['title'] = $title;
+            $_SESSION['author'] = $author;
+            $_SESSION['isbn'] = $isbn;
+            $_SESSION['kategorie'] = $kategorie;
+            $_SESSION['verlag'] = $verlag;
+            $_SESSION['beschreibung'] = $beschreibung;
+            // Nach Verarbeitung Session-Werte löschen
+            header("Location: buch_erstellen.php?create=error");
+        }
+    } else {
+        $sql = "INSERT INTO buch (isbn, titel, kategorie, verlag, beschreibung) VALUES ('$isbn', '$titel', '$kategorie', '$verlag', '$beschreibung')";
+        $conn->query($sql);
+        header("Location: biblithekar.php?create=success");
+        unset($_SESSION['isbn'], $_SESSION['title'], $_SESSION['kategorie'], $_SESSION['verlag'], $_SESSION['beschreibung']);
+    };
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -308,83 +336,83 @@ include "../../db.php";
                                     </div>
                                 </div>
                                 <div class="flex-auto p-6">
-                                    <form action="" method="post">
+                                    <form action="buch_erstellen.php" method="POST">
                                         <div class="flex flex-wrap -mx-3">
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="username" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">ISBN</label>
-                                                    <input type="text" name="isbn" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                    <label for="isbn" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">ISBN</label>
+                                                    <input type="text" id="isbn" <?php if (isset($_SESSION['isbn'])) echo 'value="' . $_SESSION['isbn'] . '"'; ?> name="isbn" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                 </div>
                                             </div>
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="email" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Titel</label>
-                                                    <input type="email" name="titel" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                    <label for="titel" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Titel</label>
+                                                    <input type="text" id="titel" <?php if (isset($_SESSION['isbn'])) echo 'value="' . $_SESSION['isbn'] . '"'; ?> name="titel" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                 </div>
                                             </div>
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="first name" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Kategorie</label>
-                                                    <input type="text" name="kategorie" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                    <label for="kategorie" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Kategorie</label>
+                                                    <input type="text" id="kategorie" <?php if (isset($_SESSION['kategorie'])) echo 'value="' . $_SESSION['kategorie'] . '"'; ?> name="kategorie" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                 </div>
                                             </div>
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="last name" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Verlag</label>
-                                                    <input type="text" name="verlag" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                    <label for="verlag" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Verlag</label>
+                                                    <input type="text" id="verlag" <?php if (isset($_SESSION['verlag'])) echo 'value="' . $_SESSION['verlag'] . '"'; ?> name="verlag" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                 </div>
                                             </div>
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-full md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="address" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Beschreibung</label>
-                                                    <input type="text" name="beschreibung" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                                    <label for="beschreibung" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Beschreibung</label>
+                                                    <input type="text" id="beschreibung" <?php if (isset($_SESSION['beschreibung'])) echo 'value="' . $_SESSION['beschreibung'] . '"'; ?> name="beschreibung" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="flex justify-end">
                                             <button type="submit" name="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Erstellen</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                </form>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <footer class="pt-4">
-                    <div class="w-full px-6 mx-auto">
-                        <div class="flex flex-wrap items-center -mx-3 lg:justify-between">
-                            <div class="w-full max-w-full px-3 mt-0 mb-6 shrink-0 lg:mb-0 lg:w-1/2 lg:flex-none">
-                                <div class="text-sm leading-normal text-center text-slate-500 lg:text-left">
-                                    ©
-                                    <script>
-                                        document.write(new Date().getFullYear() + ",");
-                                    </script>
-                                    made with <i class="fa fa-heart"></i> by
-                                    <a href="https://www.creative-tim.com" class="font-semibold text-slate-700 dark:text-white" target="_blank">Creative Tim</a>
-                                    for a better web.
+                    <footer class="pt-4">
+                        <div class="w-full px-6 mx-auto">
+                            <div class="flex flex-wrap items-center -mx-3 lg:justify-between">
+                                <div class="w-full max-w-full px-3 mt-0 mb-6 shrink-0 lg:mb-0 lg:w-1/2 lg:flex-none">
+                                    <div class="text-sm leading-normal text-center text-slate-500 lg:text-left">
+                                        ©
+                                        <script>
+                                            document.write(new Date().getFullYear() + ",");
+                                        </script>
+                                        made with <i class="fa fa-heart"></i> by
+                                        <a href="https://www.creative-tim.com" class="font-semibold text-slate-700 dark:text-white" target="_blank">Creative Tim</a>
+                                        for a better web.
+                                    </div>
+                                </div>
+                                <div class="w-full max-w-full px-3 mt-0 shrink-0 lg:w-1/2 lg:flex-none">
+                                    <ul class="flex flex-wrap justify-center pl-0 mb-0 list-none lg:justify-end">
+                                        <li class="nav-item">
+                                            <a href="https://www.creative-tim.com" class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-in-out text-slate-500" target="_blank">Creative Tim</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="https://www.creative-tim.com/presentation" class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-in-out text-slate-500" target="_blank">About Us</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="https://creative-tim.com/blog" class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-in-out text-slate-500" target="_blank">Blog</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="https://www.creative-tim.com/license" class="block px-4 pt-0 pb-1 pr-0 text-sm font-normal transition-colors ease-in-out text-slate-500" target="_blank">License</a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="w-full max-w-full px-3 mt-0 shrink-0 lg:w-1/2 lg:flex-none">
-                                <ul class="flex flex-wrap justify-center pl-0 mb-0 list-none lg:justify-end">
-                                    <li class="nav-item">
-                                        <a href="https://www.creative-tim.com" class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-in-out text-slate-500" target="_blank">Creative Tim</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="https://www.creative-tim.com/presentation" class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-in-out text-slate-500" target="_blank">About Us</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="https://creative-tim.com/blog" class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-in-out text-slate-500" target="_blank">Blog</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="https://www.creative-tim.com/license" class="block px-4 pt-0 pb-1 pr-0 text-sm font-normal transition-colors ease-in-out text-slate-500" target="_blank">License</a>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
-                    </div>
-                </footer>
-            </div>
-            <!-- end cards -->
+                    </footer>
+                </div>
+                <!-- end cards -->
     </main>
     <div fixed-plugin>
         <a fixed-plugin-button class="fixed px-4 py-2 text-xl bg-white shadow-lg cursor-pointer bottom-8 right-8 z-990 rounded-circle text-slate-700">

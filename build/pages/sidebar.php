@@ -44,7 +44,7 @@
         <?php
         if(isset($_SESSION['name'])){
           echo '<li class="mt-0.5 w-full">';
-          echo '<a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="../pages/bibliothekar.php">';
+          echo '<a class="' . ($current_page == 'bibliothekar.php' ? 'py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors' : 'dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors') . '" href="../pages/bibliothekar.php">';
           echo '<div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">';
           echo '<i class="relative top-0 text-sm leading-normal text-orange-500 fa-solid fa-user-tie fa-xl"></i>';
           echo '</div>';
@@ -52,7 +52,7 @@
           echo '</a>';
           echo '</li>';
           echo '<li class="mt-0.5 w-full">';
-          echo '<a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="../pages/overdue.php">';
+          echo '<a class="' . ($current_page == 'overdue.php' ? 'py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors' : 'dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors') . '" href="../pages/overdue.php">';
           echo '<div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">';
           echo '<i class="relative top-0 text-sm leading-normal text-orange-500 fa-solid fa-circle-exclamation fa-xl"></i>';
           echo '</div>';

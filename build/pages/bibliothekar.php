@@ -229,7 +229,7 @@ if (!isset($_SESSION['name'])) {
             </thead>
             <tbody>
               <?php
-              $tabel_buch = "SELECT * FROM buecher";
+              $tabel_buch = "SELECT * FROM buecher b LEFT JOIN kategorie k ON k.kat_id = b.kategorie";
               $result_tabel = $conn->query($tabel_buch);
               while ($row = $result_tabel->fetch_assoc()) {
                 echo '<tr>';
@@ -238,7 +238,7 @@ if (!isset($_SESSION['name'])) {
                 echo '<td>' . $row['beschreibung'] . '</td>';
                 echo '<td>' . $row['verlag'] . '</td>';
                 echo '<td>' . $row['anschaffungspreis'] . '€</td>';
-                echo '<td>' . $row['kategorie'] . '</td>';
+                echo '<td>' . $row['name'] . '</td>';
                 echo '<td>';
                 echo '<a href="bearbeiten.php?isbn=' . $row['isbn'] . '">Bearbeiten</a> | ';
                 echo '<a href="#" class="delete-btn" data-isbn="' . $row['isbn'] . '">Löschen</a>';

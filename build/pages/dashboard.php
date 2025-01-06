@@ -82,8 +82,12 @@ include "../../db.php";
                       <i class="text-white ni ni-books relative top-0.75 text-xxs"></i>
                     </div>
                     <div class="flex flex-col">
-                      <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white"><?php echo $row['name']; ?></h6>
+                      <form action="bibliothek.php" method="POST">
+                      <input type="hidden" name="kategorie" value="<?php echo $row['name']; ?>">
+                      <button type="submit" class="text-sm font-semibold leading-normal text-slate-700 dark:text-white hover:text-slate-700 dark:hover:text-white"><?php echo $row['name']; ?></button>
+                      <br>
                       <span class="text-xs leading-tight dark:text-white/80"><?php echo $row['total_books']; ?> Bücher</span>
+                      </form>
                     </div>
                   </div>
                 </li>

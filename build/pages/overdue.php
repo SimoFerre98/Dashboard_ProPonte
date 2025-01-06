@@ -78,7 +78,6 @@ include "alerts_bibliothek.php";
     include "navbar.php";
     ?>
     <!-- cards row 2 -->
-
     <div class="flex flex-wrap mt-6 -mx-3">
       <!-- Füge dies in dein HTML für den Paginierungsbereich ein -->
       <div class="flex-none w-full max-w-full px-3">
@@ -91,6 +90,8 @@ include "alerts_bibliothek.php";
               }
               if ($result_tabel->num_rows > 0) {
                 include "table_yes.php";
+              }else{
+                echo "<div class='flex items-center justify-center h-96'><h1 class='text-2xl text-green-400 font-semibold'>Keine überfälligen Bücher</h1></div>";
               }
             ?>
         </div>

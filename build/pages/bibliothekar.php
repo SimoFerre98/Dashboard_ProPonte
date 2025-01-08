@@ -311,11 +311,14 @@ if (!isset($_SESSION['name'])) {
   <div class="fixed end-6 bottom-6 group">
     <!-- Speed Dial Menu -->
     <div id="speed-dial-menu-default" class="flex flex-col items-center hidden mb-4 space-y-2">
-      <a href="./buch_erstellen.php" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
+      <a href="./buch_erstellen.php" 
+         class="relative flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
         <i class="fa fa-book-medical fa-1x"></i>
-        <span class="sr-only">Buch hinzufügen</span>
+        <!-- Tooltip -->
+        <span class="absolute right-full mr-2 px-2 py-1 text-sm text-white bg-gray-800 rounded opacity-0 transition-opacity duration-300 hover:opacity-100">
+          Buch hinzufügen
+        </span>
       </a>
-
     </div>
 
     <!-- Main Button -->
@@ -327,6 +330,18 @@ if (!isset($_SESSION['name'])) {
     </button>
   </div>
 </div>
+
+<style>
+  a span {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  a:hover span {
+    opacity: 1;
+  }
+</style>
+
 
 <script>
   // JavaScript for toggling the speed dial menu

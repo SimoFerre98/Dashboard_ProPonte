@@ -128,14 +128,14 @@ include "../../db.php";
                                         <div class="flex flex-wrap -mx-3">
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="isbn" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">ISBN</label>
-                                                    <input type="text" id="isbn" <?php if (isset($_SESSION['isbn'])) echo 'value="' . $_SESSION['isbn'] . '"'; ?> name="isbn" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" required />
+                                                    <label for="isbn" class="inline-block mb-2 ml-1 font-bold text-s text-slate-700 dark:text-white/80">ISBN</label>
+                                                    <input type="text" id="isbn" <?php if (isset($_SESSION['isbn'])) echo 'value="' . $_SESSION['isbn'] . '"'; ?> name="isbn" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-xl py-3 px-4" required />
                                                 </div>
                                             </div>
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="titel" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Titel</label>
-                                                    <input type="text" id="titel" <?php if (isset($_SESSION['titel'])) echo 'value="' . $_SESSION['titel'] . '"'; ?> name="titel" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" required />
+                                                    <label for="titel" class="inline-block mb-2 ml-1 font-bold text-s text-slate-700 dark:text-white/80">Titel</label>
+                                                    <input type="text" id="titel" <?php if (isset($_SESSION['titel'])) echo 'value="' . $_SESSION['titel'] . '"'; ?> name="titel" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-xl py-3 px-4" required />
                                                 </div>
                                             </div>
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
@@ -144,8 +144,8 @@ include "../../db.php";
                                                     $sql = "SELECT * FROM kategorie";
                                                     $result = $conn->query($sql);
                                                     ?>
-                                                    <label for="kategorie" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Kategorie</label>
-                                                    <select name="kategorie" id="kategorie" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" required>
+                                                    <label for="kategorie" class="inline-block mb-2 ml-1 font-bold text-s text-slate-700 dark:text-white/80">Kategorie</label>
+                                                    <select name="kategorie" id="kategorie" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-xl py-3 px-4" required>
                                                         <option value="">Kategorie auswählen</option>
                                                         <?php
                                                         while ($row = $result->fetch_assoc()) {
@@ -157,27 +157,27 @@ include "../../db.php";
                                             </div>
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="verlag" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Verlag</label>
-                                                    <input type="text" id="verlag" <?php if (isset($_SESSION['verlag'])) echo 'value="' . $_SESSION['verlag'] . '"'; ?> name="verlag" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" required />
+                                                    <label for="verlag" class="inline-block mb-2 ml-1 font-bold text-s text-slate-700 dark:text-white/80">Verlag</label>
+                                                    <input type="text" id="verlag" <?php if (isset($_SESSION['verlag'])) echo 'value="' . $_SESSION['verlag'] . '"'; ?> name="verlag" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-xl py-3 px-4" required />
                                                 </div>
                                             </div>
 
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-full md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="beschreibung" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Beschreibung</label>
-                                                    <input type="text" id="beschreibung" <?php if (isset($_SESSION['beschreibung'])) echo 'value="' . $_SESSION['beschreibung'] . '"'; ?> name="beschreibung" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" required />
+                                                    <label for="beschreibung" class="inline-block mb-2 ml-1 font-bold text-s text-slate-700 dark:text-white/80">Beschreibung</label>
+                                                    <input type="text" id="beschreibung" <?php if (isset($_SESSION['beschreibung'])) echo 'value="' . $_SESSION['beschreibung'] . '"'; ?> name="beschreibung" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-xl py-3 px-4" required />
                                                 </div>
                                             </div>
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="preis" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Anschaffungspreis</label>
-                                                    <input type="number" step="0.01" id="preis" <?php if (isset($_SESSION['preis'])) echo 'value="' . $_SESSION['preis'] . '"'; ?> name="preis" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" required />
+                                                    <label for="preis" class="inline-block mb-2 ml-1 font-bold text-s text-slate-700 dark:text-white/80">Anschaffungspreis</label>
+                                                    <input type="number" step="0.01" id="preis" <?php if (isset($_SESSION['preis'])) echo 'value="' . $_SESSION['preis'] . '"'; ?> name="preis" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-xl py-3 px-4" required />
                                                 </div>
                                             </div>
                                             <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                                 <div class="mb-4">
-                                                    <label for="author" class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Autor</label>
-                                                    <input type="text" step="0.01" id="author" <?php if (isset($_SESSION['author'])) echo 'value="' . $_SESSION['author'] . '"'; ?> name="author" class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" required />
+                                                    <label for="author" class="inline-block mb-2 ml-1 font-bold text-s text-slate-700 dark:text-white/80">Autor</label>
+                                                    <input type="text" step="0.01" id="author" <?php if (isset($_SESSION['author'])) echo 'value="' . $_SESSION['author'] . '"'; ?> name="author" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-xl py-3 px-4" required />
                                                 </div>
                                             </div>
                                         </div>

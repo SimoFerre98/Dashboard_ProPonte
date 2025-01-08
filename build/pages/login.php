@@ -5,9 +5,6 @@ if(isset($_POST['mail']) && isset($_POST['password'])){
     $mail = $_POST['mail'];
     $password = $_POST['password'];
 
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
-
     $sql = "SELECT * FROM users WHERE email = '$mail'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);

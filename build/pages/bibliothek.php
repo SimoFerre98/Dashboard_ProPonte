@@ -89,7 +89,10 @@ include "alerts_bibliothek.php";
                   name="search"
                   value="<?php if (isset($_POST['search'])) {
                     echo $_POST['search'];
-                  } ?>"
+                  }elseif(isset($_POST['kategorie'])){
+                    echo $_POST['kategorie'];
+                  }
+                    ?>"
                   placeholder="Suchbegriff eingeben..."
                   class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-2 px-2 leading-tight focus:outline-none" />
                 <button

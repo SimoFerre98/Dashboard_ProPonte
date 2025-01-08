@@ -111,12 +111,11 @@ include "../../db.php";
             <table class="items-center w-full mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
               <thead>
                 <tr>
-                  <th class="p-2 text-left bg-gray-100 dark:bg-gray-800 dark:text-white">Platz</th>
-                  <th class="p-2 text-left bg-gray-100 dark:bg-gray-800 dark:text-white">Titel</th>
-                  <th class="p-2 text-left bg-gray-100 dark:bg-gray-800 dark:text-white">Beschreibung</th>
-                  <th class="p-2 text-left bg-gray-100 dark:bg-gray-800 dark:text-white">Verlag</th>
-                  <th class="p-2 text-left bg-gray-100 dark:bg-gray-800 dark:text-white">Kategorie</th>
-                  <th class="p-2 text-left bg-gray-100 dark:bg-gray-800 dark:text-white">Author</th>
+                  <th class="p-2  bg-gray-100 dark:bg-gray-800 dark:text-white">Titel</th>
+                  <th class="p-2  bg-gray-100 dark:bg-gray-800 dark:text-white">Beschreibung</th>
+                  <th class="p-2  bg-gray-100 dark:bg-gray-800 dark:text-white">Verlag</th>
+                  <th class="p-2  bg-gray-100 dark:bg-gray-800 dark:text-white">Kategorie</th>
+                  <th class="p-2  bg-gray-100 dark:bg-gray-800 dark:text-white">Author</th>
                 </tr>
               </thead>
               <tbody>
@@ -127,16 +126,10 @@ include "../../db.php";
                       ORDER BY anzahl DESC LIMIT 5";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
-                  $Platz = 0;
                   while ($row = $result->fetch_assoc()) {
-                    $Platz++;
                 ?>
                     <tr>
-                      <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
-                        <div class="flex items-center justify-center px-2 py-1">
-                          <h6 class="mb-0 text-sm leading-normal dark:text-white">Platz: <?php echo $Platz; ?></h6>
-                        </div>
-                      </td>
+
                       <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
                         <div class="flex items-center px-2 py-1">
                           <div class="ml-6">

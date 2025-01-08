@@ -85,11 +85,11 @@ include "alerts_bibliothek.php";
 
           <?php
               if(isset($_SESSION['name'])) {
-                $table = " SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, l.buch_id, l.returned FROM buecher b Left JOIN lendings l ON b.id = l.buch_id WHERE returned = '0' AND CURRENT_DATE() > end";
+                $table = " SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, k.kat_id, k.name, l.buch_id, l.returned, l.name AS Ausleiher FROM buecher b Left JOIN lendings l ON b.id = l.buch_id INNER JOIN kategorie k ON k.kat_id = b.kategorie WHERE returned = '0' AND CURRENT_DATE() > end";
                 $result_tabel = $conn->query($table);
               }
               if ($result_tabel->num_rows > 0) {
-                include "table_yes.php";
+                include "table_overdue.php";
               }else{
                 echo "<div class='flex items-center justify-center h-96'><h1 class='text-2xl text-green-400 font-semibold'>Keine überfälligen Bücher</h1></div>";
               }
@@ -111,28 +111,6 @@ include "alerts_bibliothek.php";
             </svg>
           </button>
         </div>
-
-        <!-- Modal Body -->
-        <form id="nameForm" action="ausleihen.php" method="POST" class="space-y-4">
-          <div>
-            <input type="hidden" id="bookId" name="book_id" value="">
-            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-            <input type="text" id="name" name="name" required
-              class="block w-full px-4 py-2 mt-1 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300 placeholder-gray-400">
-          </div>
-
-          <!-- Modal Footer -->
-          <div class="flex justify-end space-x-4 pt-4 border-t">
-            <button type="button" id="cancelBtn"
-              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
-              Abbrechen
-            </button>
-            <button type="submit"
-              class="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
-              Weiter
-            </button>
-          </div>
-        </form>
       </div>
     </div>
 

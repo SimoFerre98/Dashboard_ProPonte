@@ -9,7 +9,7 @@
                     <th>Verlag</th>
                     <th>Kategorie</th>
                     <th>Author</th>
-                    <th>Verfügbar</th>
+                    <th>Ausleiher</th>
                     <?php
                     if (isset($_SESSION['name'])) {
                       echo '<th>Option</th>';
@@ -23,23 +23,12 @@
                     echo '<tr>';
                     echo '<td>' . $row['isbn'] . '</td>';
                     echo '<td>' . $row['titel'] . '</td>';
-                    if(strlen($row['beschreibung']) > 50){
-                      echo '<td>' . substr($row['beschreibung'], 0, 50) . '<a href="book_details.php?book_id='.$row['id'].'" class="text-blue-500"> ...mehr</a></td>';
-                    }else{
-                      echo '<td>' . $row['beschreibung'] . '</td>';
-                    }
-                    
+                    echo '<td>' . $row['beschreibung'] . '</td>';
                     echo '<td>' . $row['verlag'] . '</td>';
                     echo '<td>' . $row['name'] . '</td>';
                     echo '<td>' . $row['author'] . '</td>';
                     echo '<td>';
-                    if ($row['returned'] == "") {
-                      echo 'Ja';
-                    } elseif ($row['returned'] == 0) {
-                      echo 'Nein';
-                    } else {
-                      echo 'Ja';
-                    }
+                    echo $row['Ausleiher'];
                     echo '</td>';
                     if (isset($_SESSION['name'])) {
                       if ($row['returned'] == "" || $row['returned'] == 1) {

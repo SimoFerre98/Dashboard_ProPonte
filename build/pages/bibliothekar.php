@@ -235,8 +235,11 @@ if (!isset($_SESSION['name'])) {
                 echo '<tr>';
                 echo '<td>' . $row['isbn'] . '</td>';
                 echo '<td>' . $row['titel'] . '</td>';
-                echo '<td>' . $row['beschreibung'] . '</td>';
-                echo '<td>' . $row['verlag'] . '</td>';
+                if(strlen($row['beschreibung']) > 50){
+                  echo '<td>' . substr($row['beschreibung'], 0, 50) . '<a href="book_details.php?book_id='.$row['id'].'" class="text-blue-500"> ...mehr</a></td>';
+                }else{
+                  echo '<td>' . $row['beschreibung'] . '</td>';
+                }                echo '<td>' . $row['verlag'] . '</td>';
                 echo '<td>' . $row['anschaffungspreis'] . '€</td>';
                 echo '<td>' . $row['name'] . '</td>';
                 echo '<td>';

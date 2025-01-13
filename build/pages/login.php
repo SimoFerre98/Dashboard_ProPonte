@@ -6,8 +6,8 @@ if(isset($_POST['mail']) && isset($_POST['password'])){
     $password = $_POST['password'];
 
     $sql = "SELECT * FROM users WHERE email = '$mail'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
 
     $gespeichertes_passwort_hash = $row['password'];
     password_verify($password, $gespeichertes_passwort_hash);
@@ -19,7 +19,7 @@ if(isset($_POST['mail']) && isset($_POST['password'])){
         $_SESSION['name'] = $row['name'];
         header("Location: dashboard.php");
     }else{
-        header("Location: sing-in.php?error=1");
+        header("Location: sign-in.php?error=1");
     }
 
 }

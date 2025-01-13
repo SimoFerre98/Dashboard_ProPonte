@@ -31,11 +31,12 @@ if (isset($_POST["submit"])) {
         $_SESSION['verlag'] = $verlag;
         $_SESSION['beschreibung'] = $beschreibung;
         $_SESSION['author'] = $author;
+        $_SESSION['preis'] = $preis;
         header("Location: buch_erstellen_form.php?create=error_isbn");
     }else {
         $sql = "INSERT INTO buecher (isbn, titel, beschreibung, verlag, anschaffungspreis, kategorie, author) VALUES ('$isbn', '$titel', '$beschreibung', '$verlag', '$preis', '$kategorie', '$author')";
         if ($conn->query($sql)) {
-            unset($_SESSION['isbn'], $_SESSION['titel'], $_SESSION['kategorie'], $_SESSION['verlag'], $_SESSION['beschreibung']);
+            unset($_SESSION['isbn'], $_SESSION['titel'], $_SESSION['kategorie'], $_SESSION['verlag'], $_SESSION['beschreibung'], $_SESSION['author'], $_SESSION['preis']);
             header("Location: bibliothekar.php?create=success");
             exit();
         } else {

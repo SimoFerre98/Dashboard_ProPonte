@@ -20,7 +20,7 @@ if (isset($_POST['book_id']) && $_SESSION['name']){
         $sql3 = "UPDATE statisic SET anzahl = anzahl + 1 WHERE buch_id = $id";
         $result3 = $conn->query($sql3);
     }
-    
+    include "./webhook.php";
 
     
     if ($result) {

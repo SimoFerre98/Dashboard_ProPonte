@@ -34,8 +34,6 @@ $response = curl_exec($ch);
 // Fehler prüfen
 if (curl_errno($ch)) {
     echo 'cURL-Fehler: ' . curl_error($ch);
-} else {
-    echo 'Erfolg: ' . $response;
 }
 
 // cURL schließen

@@ -87,14 +87,24 @@ include "alerts_bibliothek.php";
                 <input
                   type="text"
                   name="search"
-                  value="<?php if (isset($_POST['search'])) {
-                    echo $_POST['search'];
-                  }elseif(isset($_POST['kategorie'])){
-                    echo $_POST['kategorie'];
-                  }
-                    ?>"
+                  value="<?= htmlspecialchars($_POST['search'] ?? '', ENT_QUOTES) ?>"
                   placeholder="Suchbegriff eingeben..."
                   class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-2 px-2 leading-tight focus:outline-none" />
+
+                <select name="kategorie" class="appearance-none bg-transparent border-none text-gray-700 mr-3 py-2 px-2 leading-tight focus:outline-none">
+                  <option value="">Kategorie wählen...</option>
+                  <?php
+                  $sql = "SELECT * FROM kategorie";
+                  $result = $conn->query($sql);
+                  if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                      $selected = (isset($_POST['kategorie']) && $_POST['kategorie'] == $row['name']) ? 'selected' : '';
+                      echo "<option value='" . htmlspecialchars($row['name'], ENT_QUOTES) . "' $selected>" . htmlspecialchars($row['name'], ENT_QUOTES) . "</option>";
+                    }
+                  }
+                  ?>
+                </select>
+
                 <button
                   type="submit"
                   name="suchen"
@@ -104,29 +114,58 @@ include "alerts_bibliothek.php";
               </div>
             </form>
 
+
           </div>
           <?php
-            if (isset($_POST['suchen'])) {
-              $searchtext = $_POST['search'];
-              if(isset($_POST['search'])){
-                $table = " SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, l.buch_id, l.returned, k.name FROM buecher b Left JOIN lendings l ON b.id = l.buch_id LEFT JOIN kategorie k ON k.kat_id = b.kategorie
-                WHERE b.beschreibung LIKE '%$searchtext%' OR b.titel LIKE '%$searchtext%' OR b.author LIKE '%$searchtext%' OR b.verlag LIKE '%$searchtext%' OR b.kategorie LIKE '%$searchtext%'";
-                $result_tabel = $conn->query($table);
-              }
-              }else if(isset($_POST['kategorie'])){
-                $kategorie = $_POST['kategorie'];
-                $table = " SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, l.buch_id, l.returned, k.name FROM buecher b Left JOIN lendings l ON b.id = l.buch_id LEFT JOIN kategorie k ON k.kat_id = b.kategorie
-                Where k.name LIKE '%$kategorie%'";
-                $result_tabel = $conn->query($table);
-              }
-              else{
-                $table = " SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, l.buch_id, l.returned, k.name FROM buecher b Left JOIN lendings l ON b.id = l.buch_id LEFT JOIN kategorie k ON k.kat_id = b.kategorie";
-                $result_tabel = $conn->query($table);
-              }
-              if ($result_tabel->num_rows > 0) {
-                include "table_yes.php";
-              }
-            ?>
+          if (isset($_POST['suchen'])) {
+            $searchtext = $_POST['search'] ?? '';
+            $kategorie = $_POST['kategorie'] ?? '';
+
+            if (!empty($searchtext) && !empty($kategorie)) {
+              // Suche und Kategorie sind gesetzt
+              $table = "SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, l.buch_id, l.returned, k.name
+                FROM buecher b
+                LEFT JOIN lendings l ON b.id = l.buch_id
+                LEFT JOIN kategorie k ON k.kat_id = b.kategorie
+                WHERE (b.beschreibung LIKE '%$searchtext%'
+                   OR b.titel LIKE '%$searchtext%'
+                   OR b.author LIKE '%$searchtext%'
+                   OR b.verlag LIKE '%$searchtext%')
+                   AND k.name LIKE '%$kategorie%'";
+            } elseif (!empty($searchtext)) {
+              // Nur Suche ist gesetzt
+              $table = "SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, l.buch_id, l.returned, k.name
+                FROM buecher b
+                LEFT JOIN lendings l ON b.id = l.buch_id
+                LEFT JOIN kategorie k ON k.kat_id = b.kategorie
+                WHERE b.beschreibung LIKE '%$searchtext%'
+                   OR b.titel LIKE '%$searchtext%'
+                   OR b.author LIKE '%$searchtext%'
+                   OR b.verlag LIKE '%$searchtext%'";
+            } elseif (!empty($kategorie)) {
+              // Nur Kategorie ist gesetzt
+              $table = "SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, l.buch_id, l.returned, k.name
+                FROM buecher b
+                LEFT JOIN lendings l ON b.id = l.buch_id
+                LEFT JOIN kategorie k ON k.kat_id = b.kategorie
+                WHERE k.name LIKE '%$kategorie%'";
+            } else {
+              // Weder Suche noch Kategorie sind gesetzt, Standardquery
+              $table = "SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, l.buch_id, l.returned, k.name
+                FROM buecher b
+                LEFT JOIN lendings l ON b.id = l.buch_id
+                LEFT JOIN kategorie k ON k.kat_id = b.kategorie";
+            }
+
+            $result_tabel = $conn->query($table);
+            if ($result_tabel->num_rows > 0) {
+              include "table_yes.php";
+            } else {
+              echo "Keine Ergebnisse gefunden.";
+            }
+          }
+
+          ?>
         </div>
       </div>
     </div>

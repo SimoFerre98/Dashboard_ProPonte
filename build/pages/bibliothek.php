@@ -117,13 +117,13 @@ include "alerts_bibliothek.php";
 
           </div>
           <?php
-          $table = ""; // Variable für die SQL-Query
-          $result_tabel = null; // Variable für die Ergebnisse
+          $table = ""; 
+          $result_tabel = null;
 
-          // Überprüfen, ob das Formular abgesendet wurde
+          
           if (isset($_POST['suchen'])) {
-            $searchtext = $_POST['search'] ?? ''; // Standardwert für 'search', falls leer
-            $kategorie = $_POST['kategorie'] ?? ''; // Standardwert für 'kategorie', falls leer
+            $searchtext = $_POST['search'] ?? ''; 
+            $kategorie = $_POST['kategorie'] ?? ''; 
 
             // Beide Felder leer
             if (empty($searchtext) && empty($kategorie)) {
@@ -168,10 +168,8 @@ include "alerts_bibliothek.php";
                      AND k.name LIKE '%$kategorie%'";
             }
 
-            // Query ausführen
             $result_tabel = $conn->query($table);
           } else {
-            // Standard: Wenn das Formular nicht abgesendet wurde
             $table = "SELECT b.id, b.isbn, b.titel, b.beschreibung, b.verlag, b.kategorie, b.author, 
                      l.buch_id, l.returned, k.name 
               FROM buecher b 
@@ -180,11 +178,10 @@ include "alerts_bibliothek.php";
             $result_tabel = $conn->query($table);
           }
 
-          // Ergebnisse anzeigen
           if ($result_tabel && $result_tabel->num_rows > 0) {
             include "table_yes.php"; // Tabelle anzeigen
           } else {
-            echo "<p class='text-center'>Keine Ergebnisse gefunden.</p>"; // Nachricht, wenn keine Ergebnisse
+            echo "<p class='text-center'>Keine Ergebnisse gefunden.</p>";
           }
           ?>
 

@@ -1,0 +1,17 @@
+**IMPORTANT NOTICE: DATABASE CREDENTIALS EXPOSED**
+
+Hi mtsp4it-bibliothek,
+
+I noticed that your repository contains database credentials in plain text in the `db.php` file located in the root directory. This is a serious security vulnerability that could allow unauthorized access to your database.
+
+I recommend that you take the following steps to protect your data:
+
+1. **Change your database credentials immediately.** This includes the password, username, and if possible, the database host and name.
+2. **Remove the exposed credentials from your repository's history.** You can use tools like `git filter-branch` or `bfg` to rewrite the history and remove the sensitive data.
+3. **Implement secure methods for managing credentials in the future.** Consider using environment variables, configuration files with restricted permissions, or dedicated secret management services.
+
+I understand that this might have been an oversight, but it is crucial to address this issue as soon as possible. The `db.php` file in its current state poses a significant risk. If you have any questions or need help with the process, please feel free to ask.
+
+Thank you for your understanding.
+
+Best regards
